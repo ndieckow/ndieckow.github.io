@@ -1,13 +1,13 @@
 baseURL: "https://ndieckow.github.io/"
 languageCode: "en-us"
 title: Thoughts about Life and AI
-theme: papermod
+theme: stack
 copyright: Niklas Dieckow
 
 params:
   homeInfoParams:
-    Title: Welcome to my blog
-    Content: This is a collection of thoughts and ideas of a twenty-something PhD student in artificial intelligence. Expect AI-focused topics, but also personal topics such as learned lessons that I would like to share.
+    Title: Niklas' Blog
+    Content: On this blog, I'll share what I'm currently working on and thinking about.
 
   socialIcons: # optional
     - name: GitHub

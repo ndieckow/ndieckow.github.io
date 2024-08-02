@@ -6,6 +6,7 @@ tags:
     - studying
 categories:
     - Life
+draft: true
 ---
 
 I'm sure you've heard the following at least once in your life:
