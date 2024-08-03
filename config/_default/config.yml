@@ -1,6 +1,6 @@
 baseURL: "https://ndieckow.github.io/"
 languageCode: "en-us"
-title: Thoughts about Life and AI
+title: Niklas Dieckow
 theme: stack
 copyright: Niklas Dieckow
 
@@ -23,6 +23,33 @@ params:
     threshold: 0.4
     minMatchCharLength: 0
     keys: ["title", "permalink", "summary", "content"]
+  
+  sidebar:
+    compact: false
+    emoji: "🚀"
+    subtitle: "PhD student at the Research Group for Human-Centric AI, TUHH"
+    avatar:
+      enabled: false
+
+  article:
+    math: true
+    readingTime: true
+
+  widgets:
+    homepage:
+      - type: "search"
+        params: {}
+      - type: "archives"
+        params: {}   
+      - type: "categories"
+        params: {}
+      - type: "tag-cloud"
+        params: {}
+    page:
+      - type: "search"
+        params: {}
+      - type: "toc"
+        params: {}
 
 outputs:
   home:

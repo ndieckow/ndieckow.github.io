@@ -3,6 +3,7 @@ title: 'Mixed Policies and AI Assistance'
 date: 2024
 draft: true
 math: true
+toc: true
 author: Niklas
 tags:
     - research
@@ -27,13 +28,13 @@ The parameter $\phi$ can be very flexible and depend on a lot of factors such as
 
 We consider a few interesting use cases of this model in the following sections.
 
-# Use Case 1: $\pi^\mathrm{sup} = \pi^\star$ and $\phi$ is constant
+## Use Case 1: $\pi^\mathrm{sup} = \pi^\star$ and $\phi$ is constant
 A simple case is when the supervisor policy is equal to the optimal policy of the MDP, and $\phi$ is set to a constant value.
 
-# Use Case 2: Integrate $\pi$ into the environment
+## Use Case 2: Integrate $\pi$ into the environment
 Now we get closer to the original question: How to train an optimal AI assistant that is attuned to the user's particular behavior? By integrating the occasional disobedience into the environment, we obtain a different kind of MDP whose optimal policy would correspond to the optimal assistant for a user with policy $\pi$ and acceptance $\phi$. Let's see a small example of this.
 
 ...
 
-# Experiment: Decaying $\phi$ makes assistants less annoying
+## Experiment: Decaying $\phi$ makes assistants less annoying
 This is a fun experiment that showcases the versatility of this model. So far, 
