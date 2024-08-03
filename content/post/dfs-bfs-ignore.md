@@ -6,6 +6,7 @@ tags:
     - studying
 categories:
     - Life
+draft: true
 ---
 
 When trying to familiarize myself with a new field, I often find myself overwhelmed by the possible avenues to take. I can read papers, lots of papers. But I could also try working through a tutorial. And hey, there's a Twitter post talking about something that's tagentially relevant to the field. Or maybe I should just read a textbook. But that textbook contains lots of references to landmark papers, so maybe I should read them. At the end, I'm exhausted without having actually advanced in the field. This is a problem.

@@ -6,6 +6,7 @@ tags:
     - career
 categories:
     - Life
+draft: true
 ---
 
 You've heard the saying: "There is always someone who's better than you." Better at sports. Better at art. Better at writing. Better at your job. Better at whatever you can think of. Better at **life**. The curious thing is that there is usually an implied meaning of "Therefore don't stress yourself out," which I always found puzzling. Because, to me, this statement simultaneously serves as an encouragement and also gives me a feeling of inadequacy. Because those people that are better than me are better than me *for a reason*. Some of these reasons are largely out of my control (intelligence, talent, country of birth, access to education) while others are very much in my control (time spent working in that domain, amount of self-reflection, asking the right people). So, if I maximized the things that are in my control, I could likely elevate my position in that domain.
