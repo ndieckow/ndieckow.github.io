@@ -1,10 +1,12 @@
 ---
-title: "Search" # in any language you want
-layout: "search" # is necessary
-# url: "/archive"
-# description: "Description for Search"
+title: "Search"
+slug: "search"
+layout: "search"
 summary: "search"
 placeholder: "Type something..."
+outputs:
+    - html
+    - json
 menu:
     main:
         weight: 2

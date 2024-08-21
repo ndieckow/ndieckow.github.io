@@ -1,10 +1,11 @@
 ---
 title: 'Theses'
-date: 2023-11-26T15:05:00+01:00
+date: 2023-11-26
 tags:
     - studying
 categories:
     - Studying
+image: image.jpg
 ---
 
 Yesterday, I submitted my Master's thesis. I am so happy that this moment finally came! While it was a great learning experience, I can't say that I have enjoyed it throughout. Especially nearing the end, I just wanted to be done. On this page, I want to share both of my theses (Bachelor's and Master's) with anybody who is interested in them.
@@ -30,3 +31,5 @@ If I could do it all over again, I would, first of all, pick a different problem
 ---
 
 To finish this off, I am very grateful for my time as a student. I was able to learn a lot, both in terms of knowledge and in terms of being a good scientist, and I am confident that I can take some good steps in the future, because of this.
+
+> Cover image: [Unsplash](https://unsplash.com/de/fotos/weisses-druckerpapier-lot-5cFwQ-WMcJU)

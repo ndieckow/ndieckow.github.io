@@ -1,10 +1,11 @@
 ---
 title: 'Mixed Policies and AI Assistance'
-date: 2024
+date: 2024-08-03
 draft: true
 math: true
 toc: true
 author: Niklas
+image: cover.jpg
 tags:
     - research
 categories:
@@ -38,3 +39,5 @@ Now we get closer to the original question: How to train an optimal AI assistant
 
 ## Experiment: Decaying $\phi$ makes assistants less annoying
 This is a fun experiment that showcases the versatility of this model. So far, 
+
+> Cover image: [Unsplash](https://unsplash.com/de/fotos/zwei-hande-die-nach-einem-flugobjekt-am-himmel-greifen-X9Cemmq4YjM)
