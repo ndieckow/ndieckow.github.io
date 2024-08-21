@@ -1,8 +1,12 @@
+import random
 import numpy as np
 
 def EX_approx(m, n):
+    if m == 1:
+        return 1
+
     # Fix a max. runtime that we consider. Let's take 2n
-    s = 2*n
+    s = 4*n
     # P[i][k] gives P(Y^(i) = k)
     P = np.zeros((s,s))
     Y = np.zeros(s)
@@ -20,4 +24,32 @@ def EX_approx(m, n):
     
     return m + Y.sum()
 
-print(EX_approx(20, 100))
+def sample_m(m, n):
+    assert m <= n
+    S = set()
+    it = 0
+    while len(S) < m:
+        S.add(random.randint(1,n))
+        it += 1
+    return S, it
+
+import matplotlib.pyplot as plt
+
+N = 1000
+its = []
+it_approxs = []
+for i in range(1,11):
+    it_mean = 0
+    for _ in range(N):
+        _, it = sample_m(i, 10)
+        it_mean += it
+    its.append(it_mean / N)
+
+    it_approx = EX_approx(i, 10)
+    it_approxs.append(it_approx)
+
+plt.figure()
+plt.scatter(range(1,11), its, label="True")
+plt.scatter(range(1,11), it_approxs, label="Expected")
+plt.legend()
+plt.show()
