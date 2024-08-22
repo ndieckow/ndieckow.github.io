@@ -35,21 +35,22 @@ def sample_m(m, n):
 
 import matplotlib.pyplot as plt
 
-N = 1000
+N = 100
+n = 100
 its = []
 it_approxs = []
-for i in range(1,11):
+for i in range(1,n+1):
     it_mean = 0
     for _ in range(N):
-        _, it = sample_m(i, 10)
+        _, it = sample_m(i, n)
         it_mean += it
     its.append(it_mean / N)
 
-    it_approx = EX_approx(i, 10)
+    it_approx = EX_approx(i, n)
     it_approxs.append(it_approx)
 
 plt.figure()
-plt.scatter(range(1,11), its, label="True")
-plt.scatter(range(1,11), it_approxs, label="Expected")
+plt.scatter(range(1,n+1), its, label="True")
+plt.scatter(range(1,n+1), it_approxs, label="Expected")
 plt.legend()
 plt.show()

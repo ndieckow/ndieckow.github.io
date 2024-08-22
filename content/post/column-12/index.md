@@ -23,7 +23,7 @@ To answer this, let's define a few random variables:
 
 Our goal is to compute $\mathbb E[X] = m + \mathbb E[\sum_{k=1}^\infty Y_i] = m + \sum_{k=1}^\infty \mathbb E[Y_i]$.
 
-The first observation is that the probability of $Y_i$ being $1$ depends on the values of $Y_k$ for $k < i$: This is because the probability of a repeat draw is $C_i/n$, where $C_i$ is the size of our set at the start of iteration $i$, and, in a particular instance $\omega$ of our random experiment, $C_i(\omega) = (i-1)-Y^{(i-1)}(\omega)$. Because we cannot make the probability of a random variable depend on another random variable directly, we make use of the *law of total probability*.
+The first observation is that the probability of $Y_i$ being $1$ depends on the values of $Y_k$ for $k < i$: This is because the probability of a repeat draw is $C_i/n$, where $C_i$ is the size of our set at the start of iteration $i$, which can be expressed as $C_i = (i-1)-Y^{(i-1)}$. Because we cannot make the probability of a random variable depend on another random variable directly, we make use of the *law of total probability*.
 
 $$\mathbb E[Y_i] = P(Y_i = 1) = \sum_{k=0}^{i-1} P(Y_i = 1 \mid Y^{(i-1)} = k) P(Y^{(i-1)} = k).$$
 
