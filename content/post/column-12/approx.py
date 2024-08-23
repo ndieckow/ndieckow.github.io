@@ -16,9 +16,9 @@ def EX_approx(m, n):
     for i in range(2,s):
         # Inner loop only until i, because the values can't be larger
         for k in range(i):
-            Y[i] += (i-k) / n * P[i-1][k]
-        if i-m >= 0:
-            Y[i] *= P[i-1][i-m:].sum()
+            Y[i] += (i-k) / n * P[i-1][k] * (k >= i-m)
+        #if i-m >= 0:
+        #    Y[i] *= P[i-1][i-m:].sum()
         for k in range(i):
             P[i][k] = P[i-1][k] * (1 - Y[i]) + P[i-1][k-1] * Y[i]
     
@@ -36,7 +36,7 @@ def sample_m(m, n):
 import matplotlib.pyplot as plt
 
 N = 100
-n = 100
+n = 10
 its = []
 it_approxs = []
 for i in range(1,n+1):
