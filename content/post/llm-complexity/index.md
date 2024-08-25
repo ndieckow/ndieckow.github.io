@@ -1,3 +1,16 @@
+---
+title: 'An LLM-dependent Complexity Measure'
+date: 2024-08-25
+toc: true
+draft: true
+author: Niklas
+tags:
+    - ai
+    - llm
+categories:
+    - Artificial Intelligence
+---
+
 It is known that chain-of-thought reasoning (aka adding "Think step by step" or a variant thereof to the prompt) can improve LLM performance significantly. One way of thinking about this is that the LLM can perform more complex "thoughts" by spending more tokens. Based on this, we could define an LLM-dependent complexity measure of a problem as the smallest number of tokens that the LLM needs to spend in order to correctly answer the question.
 
 Let's formalize this.
