@@ -2,11 +2,8 @@ import random
 import numpy as np
 
 def EX_approx(m, n):
-    if m == 1:
-        return 1
-
     # Fix a max. runtime that we consider. Let's take 2n
-    s = 4*n
+    s = 8*n
     # P[i][k] gives P(Y^(i) = k)
     P = np.zeros((s,s))
     Y = np.zeros(s)
@@ -16,11 +13,11 @@ def EX_approx(m, n):
     for i in range(2,s):
         # Inner loop only until i, because the values can't be larger
         for k in range(i):
-            Y[i] += (i-k) / n * P[i-1][k] * (k >= i-m)
-        #if i-m >= 0:
-        #    Y[i] *= P[i-1][i-m:].sum()
+            Y[i] += (i-k) / n * P[i-1][k] * (k > i-m)
         for k in range(i):
-            P[i][k] = P[i-1][k] * (1 - Y[i]) + P[i-1][k-1] * Y[i]
+            p1 = (i-k) / n * (k > i-m)
+            p2 = (i-(k-1)) / n * (k-1 > i-m)
+            P[i][k] = P[i-1][k] * (1 - p1) + P[i-1][k-1] * p2
     
     return m + Y.sum()
 
@@ -35,7 +32,7 @@ def sample_m(m, n):
 
 import matplotlib.pyplot as plt
 
-N = 100
+N = 1000
 n = 10
 its = []
 it_approxs = []
@@ -47,6 +44,7 @@ for i in range(1,n+1):
     its.append(it_mean / N)
 
     it_approx = EX_approx(i, n)
+    print(f"{i} | {it_approx:.2f}")
     it_approxs.append(it_approx)
 
 plt.figure()

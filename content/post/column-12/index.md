@@ -23,18 +23,19 @@ To answer this, let's define a few random variables:
 
 Our goal is to compute $\mathbb E[X] = m + \mathbb E[\sum_{k=1}^\infty Y_i] = m + \sum_{k=1}^\infty \mathbb E[Y_i]$.
 
-The first observation is that the probability of $Y_i$ being $1$ depends on the values of $Y_k$ for $k < i$: This is because the probability of a repeat draw is $C_i/n$, where $C_i$ is the size of our set at the start of iteration $i$, which can be expressed as $C_i = (i-1)-Y^{(i-1)}$. Because we cannot make the probability of a random variable depend on another random variable directly, we make use of the *law of total probability*.
+Let's denote by $C_i \coloneqq i - Y^{(i)}$ the size of the set at the end of iteration $i$.
+Then, the probability of a repeat draw in the $i$'th iteration is $C_{i-1}/n$. Because we cannot make the probability of a random variable depend on another random variable directly, we make use of the *law of total probability*.
 
 $$\mathbb E[Y_i] = P(Y_i = 1) = \sum_{k=0}^{i-1} P(Y_i = 1 \mid Y^{(i-1)} = k) P(Y^{(i-1)} = k).$$
 
 For the conditional probability, we have
-$$P(Y_i = 1 \mid Y^{(i-1)} = k) = \frac{i-k}{n} P(Y^{(i-1)} \geq i-m),$$
-where the second term is due to the fact that $Y_i$ should only be $1$, if the current size of the set is smaller than $m$.
+$$P(Y_i = 1 \mid Y^{(i-1)} = k) = \frac{(i-1)-k}{n} P(C_{i-1} < m),$$
+where the second term is due to the fact that $Y_i$ should only be $1$, if the current size of the set is smaller than $m$. This can also be rewritten as $P(Y^{(i-1)} \geq i-m)$.
 
 For the probability of the partial sums, we get:
-$$P(Y^{(i)} = k) = P(Y^{(i-1)} = k) P(Y_i = 0) + P(Y^{(i-1)} = k-1) P(Y_i = 1).$$
+$$P(Y^{(i)} = k) = P(Y^{(i-1)} = k) P(Y_i = 0 \mid Y^{(i-1)} = k) + P(Y^{(i-1)} = k-1) P(Y_i = 1 \mid Y^{(i-1)} = k-1).$$
 
-This formulation lends itself to a nice recursive algorithm that approximates $\mathbb E[X]$. I simply cap the computation at $4n$, which seems to work well, and further increasing it does not really change the result.
+This formulation lends itself to a nice recursive algorithm that approximates $\mathbb E[X]$. I simply cap the computation at $8n$, which seems to work well.
 
 ```python
 import numpy as np
@@ -43,23 +44,22 @@ def EX_approx(m, n):
     if m == 1:
         return 1
 
-    s = 4*n
-    
+    # Fix a max. runtime that we consider. Let's take 8n
+    s = 8*n
+    # P[i][k] gives P(Y^(i) = k)
     P = np.zeros((s,s))
     Y = np.zeros(s)
-
-    # Initialization of values.
     Y[1] = 1 / n
     P[1][0] = (n-1) / n
     P[1][1] = 1 / n
-
     for i in range(2,s):
+        # Inner loop only until i, because the values can't be larger
         for k in range(i):
-            Y[i] += (i-k) / n * P[i-1][k]
-        if i-m >= 0:
-            Y[i] *= P[i-1][i-m:].sum()
+            Y[i] += (i-k) / n * P[i-1][k] * (k > i-m)
         for k in range(i):
-            P[i][k] = P[i-1][k] * (1 - Y[i]) + P[i-1][k-1] * Y[i]
+            p1 = (i-k) / n * (k > i-m)  # P(Y_i = 1 | Y^(i-1) = k)
+            p2 = (i-(k-1)) / n * (k-1 > i-m)  # P(Y_i = 1 | Y^(i-1) = k-1)
+            P[i][k] = P[i-1][k] * (1 - p1) + P[i-1][k-1] * p2
     
     return m + Y.sum()
 ```
@@ -69,19 +69,23 @@ Note that I used 1-indexing in the equation but 0-indexing in the code. So, for 
 Below are the results for $n = 10$, rounded to two decimals.
 $m$|Expected iterations
 --|-----
-1 | 1.0
-2 | 2.36
-3 | 3.77
-4 | 5.37
-5 | 7.20
-6 | 9.33
-7 | 11.84
-8 | 14.87
-9 | 18.62
-10 | 23.48
+1 | 1.00
+2 | 2.11
+3 | 3.36
+4 | 4.78
+5 | 6.44
+6 | 8.43
+7 | 10.92
+8 | 14.23
+9 | 19.19
+10 | 29.08
 
 I ran an experiment to see how well it holds up in real experiments. It looks okay, but slightly wrong:
 
 ![](plot.png)
 
-So there is still an error in my calculations somewhere. Hopefully I'll find it!
+Looks correct!
+
+As I mentioned, I cap the computation after $8n$ steps. I'm not sure what makes this a good stopping point and whether this holds up for larger values of $n$. This could be something to investigate.
+
+Another point is that the book makes it sound like the answer could actually be computed analytically. It *might* be possible to turn what I wrote into a direct expression (using [generating functions](https://en.wikipedia.org/wiki/Generating_function), for example), but I'd expect it to be nasty.
