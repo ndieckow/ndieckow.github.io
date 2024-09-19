@@ -2,6 +2,9 @@ import random
 import numpy as np
 
 def EX_approx(m, n):
+    if m == 1:
+        return 1
+    
     # Fix a max. runtime that we consider. Let's take 2n
     s = 8*n
     # P[i][k] gives P(Y^(i) = k)
@@ -33,7 +36,7 @@ def sample_m(m, n):
 import matplotlib.pyplot as plt
 
 N = 1000
-n = 10
+n = 100
 its = []
 it_approxs = []
 for i in range(1,n+1):
