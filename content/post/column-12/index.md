@@ -4,6 +4,7 @@ date: 2024-08-21
 math: true
 toc: true
 author: Niklas
+image: cover_img.png
 tags:
     - programming
     - probability
@@ -94,3 +95,5 @@ Looks correct!
 As I mentioned, I cap the computation after $8n$ steps. I'm not sure what makes this a good stopping point and whether this holds up for larger values of $n$. This could be something to investigate.
 
 It would be cool to have an analytic expression for this expectation in terms of $m$ and $n$, but I wouldn't expect this to look pretty, if possible at all. If one wanted to try this, having a look at [generating functions](https://en.wikipedia.org/wiki/Generating_function) might be a good start. But maybe a closed-form expression is already known and I just didn't find it! If anybody knows, let me know.
+
+> Cover Image generated with FLUX 1.1.
