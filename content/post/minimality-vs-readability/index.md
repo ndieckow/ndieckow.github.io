@@ -35,4 +35,4 @@ oplist = list(range(2 + part2))
 ```
 This is the shortest so far, but it would also take me the longest to parse, if I saw it for the first time. 
 
-In the end, it likely just comes down to the complexity of the final expressions. Both lists, `[0, 1]` and `[0, 1, 2]`, are neither very long nor complex, so it seems cleanest to just write them out explicitly. If they were instead several lines of code, with only one small difference, we would start to feel the need to remove the redundancies, thereby actually **increasing** readability and simplicity.
+In the end, it likely just comes down to the complexity of the final expressions. Both lists, `[0, 1]` and `[0, 1, 2]`, are neither very long nor complex, so it seems cleanest to just write them out explicitly. If they were instead several lines of code, with only one small difference, we would start to feel the need to remove the redundancies, thereby actually *increasing* readability and simplicity.
