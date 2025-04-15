@@ -1,5 +1,6 @@
 ---
 title: 'How to Try New Ideas Effectively'
+draft: true
 date: 2024-11-24
 tags:
     - research-meta

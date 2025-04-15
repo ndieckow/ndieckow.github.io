@@ -1,6 +1,7 @@
 ---
 title: 'The Importance of Identifying, Streamlining and Using Tools'
 date: 2024-11-24
+draft: true
 tags:
     - research-meta
 categories:
