@@ -12,9 +12,9 @@ Suppose you have a family of polynomials $(p_i)_{i \in I}$, where $I$ is a *fini
 
 The goal is to find the shortest path from the origin to $\mathbf p$ by only traversing the polynomial curves, where it is possible to switch from one polynomial to another at their intersection points. If no such path exists, you should be able to prove it.
 
-Formally, a valid path $\mathcal P$ with $n \in \N$ transitions is given by an initial polynomial index $t_0 \in I$, a list of polynomial indices $\mathbf t \in I^n$ and switching $x$-coordinates $\mathbf x \in \R^n$ such that $p_{t_{i-1}}(x_i) = p_{t_i}(x_i)$ for all $i = 1,\dots,n$. Set $x_0 \coloneqq 0$. The length of $\mathcal P$ is the sum of the arc lengths
+Formally, a valid path $\mathcal P$ with $n \in \N$ transitions is given by an initial polynomial index $t_0 \in I$, a list of polynomial indices $\mathbf t \in I^n$ and switching $x$-coordinates $\mathbf x \in \R^n$ such that $p_{t_{i-1}}(x_i) = p_{t_i}(x_i)$ for all $i = 1,\dots,n$. Set $x_0 \coloneqq 0$. The length of $\mathcal P$ is the sum of the arc lengths,
 $$
-    \ell(\mathcal P) \coloneqq \sum_{i=0}^n \int_{x_i}^{x_{i+1}} \left\lvert p_{t_i}(t)\right\rvert \mathrm d t.
+    \ell(\mathcal P) \coloneqq \sum_{i=0}^n \int_{x_i}^{x_{i+1}} \sqrt{1 + (p_{t_i}'(t))^2} \;\mathrm d t.
 $$
 
 Using this definition, the problem can be succinctly stated as finding $\argmin \ell(P)$.
@@ -40,4 +40,71 @@ A quadratic number of intersections can indeed occur in practice: Consider $m$ p
 Because root-finding with the companion matrix method takes $\mathcal O(d^3)$ steps, the overall worst-case complexity is therefore $\mathcal O(d^3 |I|^2 + d |I|^2 \log(d |I|^2)) = \mathcal O(d |I|^2(d^2 + \log d + \log |I|))$. For a fixed degree, we thus get $\mathcal O(|I|^2 \log |I|)$. Hence, the problem is in $P$.
 
 ### Implementation
-to be continued...
+For starters, I have implemented a little class for polynomials.
+```python
+from __future__ import annotations
+from typing import Sequence, List
+
+import numpy as np
+
+class Polynomial:
+    def __init__(self, coefs: Sequence):
+        self.coefs = np.array(coefs)
+        nonzero_idx = np.where(self.coefs != 0)[0]
+        if len(nonzero_idx) == 0:
+            self.d = 0
+            self.coefs = np.array([0])
+        else:
+            self.d = nonzero_idx[-1]
+            self.coefs = self.coefs[:self.d+1]
+    
+    def evaluate(self, x: np.ndarray) -> np.ndarray:
+        return np.power(x.reshape(-1,1), np.arange(self.d+1)) @ self.coefs
+
+    def roots(self) -> List[float]:
+        """Computes all real roots of the polynomial using the companion matrix method.
+        This method first constructs the companion matrix C of the (normalized) polynomial
+        and then computes the eigenvalues of C.
+
+        Returns
+        -------
+        List[float]
+            Real roots of the polynomial.
+        """
+        assert self.coefs[-1] != 0, "Highest degree may not be 0."
+        if self.d == 0:
+            return []
+        coefs = self.coefs / self.coefs[-1] # Normalize the highest power
+        C = np.zeros((self.d,self.d))
+        C[1:,:-1] = np.eye(self.d-1)
+        C[:,-1] = -coefs[:-1]
+        try:
+            eigs, _ = np.linalg.eig(C)
+        except:
+            return []
+        return [x.real for x in eigs if x.imag == 0]
+
+    def derivative(self) -> Polynomial:
+        return Polynomial(self.coefs[1:])
+
+    def __add__(self, o: Polynomial) -> Polynomial:
+        max_deg = max(self.d, o.d)
+        coefs = np.pad(self.coefs, (0, max_deg - self.d)) + np.pad(o.coefs, (0, max_deg - o.d))
+        return Polynomial(coefs)
+    
+    def __neg__(self) -> Polynomial:
+        return Polynomial(-self.coefs)
+    
+    def __sub__(self, o: Polynomial) -> Polynomial:
+        max_deg = max(self.d, o.d)
+        coefs = np.pad(self.coefs, (0, max_deg - self.d)) - np.pad(o.coefs, (0, max_deg - o.d))
+        return Polynomial(coefs)
+    
+    def __eq__(self, o: Polynomial) -> bool:
+        return np.allclose(self.coefs, o.coefs)
+
+    def __repr__(self) -> str:
+        return " + ".join([f"{c:.2f}x^{n}" for n,c in enumerate(self.coefs)]).replace("x^0", "").replace("x^1", "x")
+```
+
+In particular, the root computation is done by computing the eigenvalues of the [companion matrix](https://en.wikipedia.org/wiki/Companion_matrix) of $p$. I did not know about this before, it's pretty neat. Of course, we have to watch out for numerical instabilities.
