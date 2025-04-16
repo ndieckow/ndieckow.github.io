@@ -32,7 +32,9 @@ In principle, this just a shortest path problem, so with some precomputation, we
 3. Run Dijkstra's algorithm on the resulting graph.
 
 ### Complexity analysis
-Dijkstra's algorithm has a complexity of $\mathcal O((|V|+|E|)\log |V|)$. In our case, vertices are intersection points. In terms of edges, there is a trade-off between degree (of a vertex) and edges: When two polynomials intersect, that intersection point forms a vertex with two edges. If a third polynomial runs through that same point, we get another two (or one) edges, but one less vertex overall. But what is the number of intersection points exactly? In the worst case, $\sum_{i,j \in \binom{I}{2}} \min(\deg(p_i), \deg(p_j))$.
+Dijkstra's algorithm has a complexity of $\mathcal O((|V|+|E|)\log |V|)$. In our case, vertices are intersection points. In terms of edges, there is a trade-off between degree (of a vertex) and edges: When two polynomials intersect, that intersection point forms a vertex with two edges. If a third polynomial runs through that same point, we get another two (or one) edges, but one less vertex overall. In fact, one can quickly observe that the resulting graph must be planar. This implies that the edges are on the same order of the vertices.
+
+Okay, but what *is* the number of vertices/intersections? In the worst case, all polynomials have the same degree $d$ and each pair of polynomials intersect at $d$ points, that are not shared with any other intersections. Then, we would have $\binom{|I|}{2} d = \mathcal O(d |I|^2)$ many intersections. Indeed, a quadratic number of intersections can occur in practice: Consider $m$ polynomials of degree 0 with different offsets, as well as another $m$ linear functions with near-infinite slope, such that they appear vertical, spaced apart in the $x$ dimension. Then, the intersections form a grid of size $m^2$.
 
 to be continued...
 
