@@ -34,13 +34,10 @@ In principle, this just a shortest path problem, so with some precomputation, we
 ### Complexity analysis
 Dijkstra's algorithm has a complexity of $\mathcal O((|V|+|E|)\log |V|)$. In our case, vertices are intersection points. In terms of edges, there is a trade-off between degree (of a vertex) and edges: When two polynomials intersect, that intersection point forms a vertex with two edges. If a third polynomial runs through that same point, we get another two (or one) edges, but one less vertex overall. In fact, one can quickly observe that the resulting graph must be planar. This implies that the edges are on the same order of the vertices.
 
-Okay, but what *is* the number of vertices/intersections? In the worst case, all polynomials have the same degree $d$ and each pair of polynomials intersect at $d$ points, that are not shared with any other intersections. Then, we would have $\binom{|I|}{2} d = \mathcal O(d |I|^2)$ many intersections. Indeed, a quadratic number of intersections can occur in practice: Consider $m$ polynomials of degree 0 with different offsets, as well as another $m$ linear functions with near-infinite slope, such that they appear vertical, spaced apart in the $x$ dimension. Then, the intersections form a grid of size $m^2$.
+Okay, but what *is* the number of vertices/intersections? In the worst case, all polynomials have the same degree $d$ and each pair of polynomials intersect at $d$ points, that are not shared with any other intersections. Then, we would have $\binom{|I|}{2} d = \mathcal O(d |I|^2)$ many intersections. If the degrees are not uniform, replace $d$ by the maximum degree.
+A quadratic number of intersections can indeed occur in practice: Consider $m$ polynomials of degree 0 with different offsets, as well as another $m$ linear functions with near-infinite slope, such that they appear vertical, spaced apart in the $x$ dimension. Then, the intersections form a grid of size $m^2$.
 
-to be continued...
-
-<!--In our case, vertices are intersection points of which there are at most $\frac{1}{2} \sum_{i \in I} \deg(p_i) + 2$ (where the $+2$ is because of the origin and the goal). In terms of edges, there is a trade-off between degree (of a vertex) and edges: When two polynomials intersect, that intersection point forms a vertex with two edges. If a third polynomial runs through that same point, we get another two (or one) edges, but one less vertex overall. Hence, we can have at most $\sum_{i\in I} \deg(p_i)$ edges.
-
-What about preprocessing? Based on the steps outlined above, we would do $\binom{|I|}{2}$ root-finding steps. I am not familiar with the variety of root-finding algorithms, but according to MATLAB, it can be done for a $d$-degree polynomial by computing the eigenvalues of an $d \times d$ matrix, which in turn has a complexity of $d^3$. Phew, sounds inefficient. But let's see how far this can takes us. -->
+Because root-finding with the companion matrix method takes $\mathcal O(d^3)$ steps, the overall worst-case complexity is therefore $\mathcal O(d^3 |I|^2 + d |I|^2 \log(d |I|^2)) = \mathcal O(d |I|^2(d^2 + \log d + \log |I|))$. For a fixed degree, we thus get $\mathcal O(|I|^2 \log |I|)$. Hence, the problem is in $P$.
 
 ### Implementation
 to be continued...
