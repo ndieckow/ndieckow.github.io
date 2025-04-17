@@ -28,7 +28,7 @@ First off, this is a classic constrained optimization problem. We want to find a
 In principle, this just a shortest path problem, so with some precomputation, we can reduce the polynomials to a graph and run a weighted shortest-path algorithm, such as Dijkstra's algorithm. So, what are the precomputations? The intersection points of the polynomials as well as the arc lengths between two such intersection points! More precisely, we'd need to do the following:
 
 1. For each pair of polynomials, determine their intersection points by subtracting the lower-degree one from the other and finding all real roots of the resulting polynomial.
-2. Next, we split each polynomial $p$ at all found intersection points as well as the origin and $\mathbb p$, in case $p$ runs through them. For each of the finite sections, compute the arc length and store the whole thing in a graph.
+2. Next, we split each polynomial $p$ at all found intersection points as well as the origin and $\mathbf p$, in case $p$ runs through them. For each of the finite sections, compute the arc length and store the whole thing in a graph.
 3. Run Dijkstra's algorithm on the resulting graph.
 
 ### Complexity analysis
@@ -108,3 +108,16 @@ class Polynomial:
 ```
 
 In particular, the root computation is done by computing the eigenvalues of the [companion matrix](https://en.wikipedia.org/wiki/Companion_matrix) of $p$. I did not know about this before, it's pretty neat. Of course, we have to watch out for numerical instabilities.
+
+## A Simpler Solution?
+While the above solution is guaranteed to give us an optimal result, it has quite a high time complexity. I wonder how much worse a simple algorithm would be. In particular, I'm thinking about the following one:
+
+> Draw a straight line from the origin to the target point $\mathbf p$. Now consider only the vertices that are connected to the faces that this line passes through, and run Dijkstra on those.
+
+To analyze this method, two questions need to be answered:
+
+1. How many vertices do we end up with? Can we safely say that it is of a smaller order (linear instead of quadratic in the number of polynomials)?
+2. How much accuracy is lost, if any?
+
+## Connections to Topology?
+In a way, this is a topology problem. If we ignore the surrounding space of $\mathbb R^2$, and consider our space as just the union of all the polynomial curves, we are essentially asking for the shortest path from one point to another in this topological space. Like a [geodesic](https://en.wikipedia.org/wiki/Geodesic), except that our space is not a smooth manifold.
